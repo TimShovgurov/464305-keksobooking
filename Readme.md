@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Тимур  Шовгуров](https://up.htmlacademy.ru/javascript/13/user/464305).
-* Наставник: [Екатерина Кащенко] (https://htmlacademy.ru/profile/id109008).
+* Наставник: [Екатерина Кащенко](https://htmlacademy.ru/profile/id109008).
 ---
 
 _Не удаляйте и не обращайте внимание на файлы:_<br>
