@@ -1,4 +1,6 @@
 'use strict';
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
 var ADVERTS_COUNT = 8;
 var typeMas = ['palace', 'flat', 'house', 'bungalo'];
 var checkinTime = ['12:00', '13:00', '14:00'];
@@ -35,6 +37,14 @@ var getRandomPhotos = function (arr) {
     arr[j] = x;
   }
   return arr;
+};
+
+var getNumberElem = function (i) {
+  var num = 0;
+  for (var n = 0; n <= ADVERTS_COUNT; n++) {
+    num = i + n;
+  }
+  return num;
 };
 
 var newDomObject = function (objectCount) {
@@ -80,6 +90,7 @@ function renderPins(objectivMas) {
     element.querySelector('img').setAttribute('src', item.author.avatar);
     element.setAttribute('style', 'left: ' + item.location.x + 'px; '
     + 'top:' + item.location.y + 'px');
+    element.setAttribute('data-about', getNumberElem(1));
     fragment.appendChild(element);
     template.appendChild(fragment);
   });
@@ -127,11 +138,8 @@ function renderPopUp(item) {
   cardElement.querySelector('.popup__photos').appendChild(renderPictures(item.offer.photos));
   return cardElement;
 }
-/*
-var cardFragment = document.createDocumentFragment();
-cardFragment.appendChild(renderPopUp(objectArray[0]));
-document.querySelector('.map').insertBefore(cardFragment, document.querySelector('.map__filters-container'));
-*/
+
+var addressPin = document.getElementById('address');
 var onPinMove = document.querySelector('.map__pin--main');
 var inputActive = document.querySelectorAll('fieldset');
 var cityMapActive = document.querySelector('.map');
@@ -141,16 +149,21 @@ onPinMove.addEventListener('mouseup', function () {
   formActive.classList.remove('ad-form--disabled');
   for (var i = 0; i < inputActive.length; i++) {
     inputActive[i].removeAttribute('disabled');
+    var newAddressLeft = onPinMove.offsetLeft - PIN_WIDTH / 2;
+    var newAddressTop = onPinMove.offsetTop + PIN_HEIGHT / 2;
+    addressPin.setAttribute('value', newAddressLeft + ', ' + newAddressTop);
   }
   renderPins(objectArray);
 });
+/*
 var mapsPins = document.querySelector('.map__pins');
-var onPinClick = mapsPins.getElementsByTagName('button');
+var PinClick = mapsPins.getElementsByTagName('button');
 var cardFragment = document.createDocumentFragment();
-onPinClick.addEventListener('click', function () {
+PinClick.addEventListener('click', function () {
   cardFragment.appendChild(renderPopUp(objectArray[0]));
   document.querySelector('.map').insertBefore(cardFragment, document.querySelector('.map__filters-container'));
 });
+*/
 
 /*
 debugger;
