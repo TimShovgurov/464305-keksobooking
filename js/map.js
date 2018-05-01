@@ -156,7 +156,7 @@ mapsPins.addEventListener('click', function (e) {
   e.preventDefault();
   var activePin = e.target.parentElement;
   if (activePin.tagName === 'BUTTON') {
-    var activePinIndex = parseInt(activePin.dataset.about);
+    var activePinIndex = parseInt(activePin.dataset.about, 10);
     var cardFragment = document.createDocumentFragment();
     cardFragment.appendChild(renderPopUp(objectArray[activePinIndex]));
     document.querySelector('.map').insertBefore(cardFragment, document.querySelector('.map__filters-container'));
