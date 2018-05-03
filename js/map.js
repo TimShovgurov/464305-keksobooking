@@ -117,20 +117,22 @@ var renderPopUp = function (item) {
       .content
       .querySelector('.map__card');
   var cardElement = similarCardTemplate.cloneNode(true);
-  cardElement.querySelector('.popup__avatar').src = item.author.avatar;
-  cardElement.querySelector('.popup__avatar').alt = item.offer.title;
-  cardElement.querySelector('.popup__title').textContent = item.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = item.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = typeMas[item.offer.type];
-  cardElement.querySelector('.popup__text--capacity').textContent = item.offer.rooms + ' комнаты для '
+  if (item) {
+    cardElement.querySelector('.popup__avatar').src = item.author.avatar;
+    cardElement.querySelector('.popup__avatar').alt = item.offer.title;
+    cardElement.querySelector('.popup__title').textContent = item.offer.title;
+    cardElement.querySelector('.popup__text--address').textContent = item.offer.address;
+    cardElement.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
+    cardElement.querySelector('.popup__type').textContent = typeMas[item.offer.type];
+    cardElement.querySelector('.popup__text--capacity').textContent = item.offer.rooms + ' комнаты для '
   + item.offer.guests + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ', выезд до '
+    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ', выезд до '
   + item.offer.checkout;
-  cardElement.querySelector('.popup__photos').textContent = '';
-  cardElement.querySelector('.popup__features').appendChild(renderFeatures(item.offer.features));
-  cardElement.querySelector('.popup__description').textContent = item.offer.description;
-  cardElement.querySelector('.popup__photos').appendChild(renderPictures(item.offer.photos));
+    cardElement.querySelector('.popup__photos').textContent = '';
+    cardElement.querySelector('.popup__features').appendChild(renderFeatures(item.offer.features));
+    cardElement.querySelector('.popup__description').textContent = item.offer.description;
+    cardElement.querySelector('.popup__photos').appendChild(renderPictures(item.offer.photos));
+  }
   return cardElement;
 };
 
