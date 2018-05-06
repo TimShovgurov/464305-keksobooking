@@ -204,6 +204,7 @@ onPinMove.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
+
 var removeDialogPanel = function () {
   var article = document.querySelector('.map__card');
   if (article) {
@@ -228,20 +229,17 @@ mapsPins.addEventListener('click', function (e) {
   var popUpCard = document.querySelector('.map__card');
   document.addEventListener('click', function (evt) {
     if (evt) {
-      evt.preventDefault();
       var activeButton = evt.target.parentNode;
       var activedButton = evt.target;
-      if (activedButton.tagName === 'BUTTON') {
-        if (activeButton.tagName === 'ARTICLE') {
+      if (activedButton.tagName === 'BUTTON' && popUpCard) {
+        if (activeButton.tagName === 'ARTICLE' && popUpCard) {
           popUpCard.remove();
-        // activeButton.parentNode.removeChild(activeButton);
         }
       }
     }
   });
-
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === ESC_KEYCODE && popUpCard) {
       popUpCard.remove();
     }
   });
@@ -250,26 +248,21 @@ mapsPins.addEventListener('click', function (e) {
 var appartmentPrice = document.getElementById('price');
 var selectType = document.getElementById('type');
 
-var setMinPrice = function () {
-  if (selectType.value === 'bungalo') {
-    appartmentPrice.min = 0;
-    appartmentPrice.placeholder = 0;
-  }
-  if (selectType.value === 'flat') {
+selectType.addEventListener('change', function () {
+  if (selectType.options[0].selected === true) {
     appartmentPrice.min = 1000;
-    appartmentPrice.placeholder = 1000;
-  }
-  if (selectType.value === 'house') {
+    appartmentPrice.placeholder = '1000';
+  } else if (selectType.options[1].selected === true) {
+    appartmentPrice.min = 0;
+    appartmentPrice.placeholder = '0';
+  } else if (selectType.options[2].selected === true) {
     appartmentPrice.min = 5000;
-    appartmentPrice.placeholder = 5000;
-  }
-  if (selectType.value === 'palace') {
+    appartmentPrice.placeholder = '5000';
+  } else if (selectType.options[3].selected === true) {
     appartmentPrice.min = 10000;
-    appartmentPrice.placeholder = 10000;
+    appartmentPrice.placeholder = '10000';
   }
-};
-setMinPrice();
-selectType.addEventListener('change', setMinPrice);
+});
 
 document.getElementById('timein').addEventListener('change', function () {
   var selectTimeIn = document.getElementById('timein');
@@ -296,27 +289,25 @@ document.getElementById('timeout').addEventListener('change', function () {
 var selectRoomNumber = document.getElementById('room_number');
 var accessCapacity = document.getElementById('capacity');
 
-// заблокировал выбор комнат
-var Room = accessCapacity.querySelectorAll('option');
-for (var r = 0; r < Room.length; r++) {
-  Room[r].setAttribute('disabled', 'disabled');
+if (selectRoomNumber.options[0].selected === true) {
+  accessCapacity.options[2].selected = true;
+  accessCapacity.options[0].disabled = true;
+  accessCapacity.options[1].disabled = true;
+  accessCapacity.options[3].disabled = true;
 }
 
 selectRoomNumber.addEventListener('change', function () {
-  var selectedRoomNumber = selectRoomNumber.options[selectRoomNumber.selectedIndex].value;
-  var allRooms = accessCapacity.querySelectorAll('option');
-  for (var q = 0; q < allRooms.length; q++) {
-    allRooms[q].setAttribute('disabled', 'disabled');
-    allRooms[q].removeAttribute('selected');
-  }
-  if (selectedRoomNumber <= 3) {
-    for (var t = 1; t <= selectedRoomNumber; t++) {
-      accessCapacity.querySelector('option[value="' + t + '"]').removeAttribute('disabled');
-      accessCapacity.querySelector('option[value="' + t + '"]').setAttribute('selected', 'selected');
+  var roomCount = selectRoomNumber.value;
+  if (roomCount !== 100) {
+    for (var i = 1; i <= 3; i++) {
+      accessCapacity.options[3 - i].disabled = i > roomCount;
     }
-  }
-  if (selectedRoomNumber === 100) {
-    accessCapacity.querySelector('option[value="0"]').removeAttribute('disabled');
-    accessCapacity.querySelector('option[value="0"]').setAttribute('selected', 'selected');
+    accessCapacity.options[3 - roomCount].selected = true;
+  } else {
+    for (i = 0; i <= 3; i++) {
+      accessCapacity.options[i].disabled = i !== 3;
+    }
+    accessCapacity.options[3].selected = true;
   }
 });
+
