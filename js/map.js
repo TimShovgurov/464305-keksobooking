@@ -22,7 +22,7 @@
       var newAddressTop = onPinMove.offsetTop + MAIN_PIN_HEIGHT / 2;
       addressPin.setAttribute('value', newAddressLeft + ', ' + newAddressTop);
     }
-    window.data.renderPins(window.data.objectArray);
+    window.renderComponents.renderPins(window.data.objectArray);
   });
 
   // передвижение метки

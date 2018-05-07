@@ -19,7 +19,7 @@
     if (activePin.dataset.about !== void 0) {
       var cardFragment = document.createDocumentFragment();
       var activePinIndex = activePin.dataset.about;
-      cardFragment = window.data.renderPopUp(window.data.objectArray[activePinIndex]);
+      cardFragment = window.renderComponents.renderPopUp(window.data.objectArray[activePinIndex]);
       mapContainer.insertAdjacentElement('beforeBegin', cardFragment);
     }
     var popUpCard = document.querySelector('.map__card');
@@ -29,14 +29,14 @@
         var activedButton = evt.target;
         if (activedButton.tagName === 'BUTTON' && popUpCard) {
           if (activeButton.tagName === 'ARTICLE' && popUpCard) {
-            popUpCard.remove();
+            removeDialogPanel();
           }
         }
       }
     });
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.escEvent && popUpCard) {
-        popUpCard.remove();
+        removeDialogPanel();
       }
     });
   });
